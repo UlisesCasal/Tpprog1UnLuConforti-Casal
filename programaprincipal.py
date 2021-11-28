@@ -204,5 +204,3 @@ def ABMcuentas(vector_cuentas, cuentashabiles):
 
 
 
-vector, cuentashabiles = cargadatos()
-print(vector[599].nombre)
