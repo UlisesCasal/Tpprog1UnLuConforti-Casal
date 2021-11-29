@@ -1,6 +1,10 @@
 #LIBRERIAS USADAS:
 from pyrecord import Record
+from random import *
+import numpy as np
 import os
+
+# COMIENZA EL EJERCICIO #1
 
 def cargadatos():
 
@@ -9,13 +13,36 @@ def cargadatos():
     #TAMBIEN DEVUELVE EL NUMERO DE CUENTAS HABILES CARGADAS EN EL VECTOR_CUENTAS
 
     archivocuentas = open("cuentas.txt", "r")
+    a2 = open("cajeros.txt","r")
 
     #Creo el registro que contendra las cuentas:
-    cuenta = Record.create_type("cuenta", "numero", "apellido", "nombre", "dni", "tipocuenta", "saldo", "estado", 
-                numero = 0, apellido = " ", nombre = " ", dni = " ", tipocuenta = 0, saldo = 0.0, estado = " ")
+    cuenta = Record.create_type("cuenta", "numero", "apellido", "nombre", "dni", "tipocuenta", "saldo", "estado",
+                                numero = 0, apellido = " ", nombre = " ", dni = " ", tipocuenta = 0, saldo = 0.0, estado = " ")
+                        
+    rcajero = Record.create_type("rcajero","num","ubi","mov",
+                                 num = 0, ubi = "", mov = 0)
+                                           
+    v_caj = np.array([rcajero]*120)    
     
+    linea_caj = a2.readline().strip()
+    lista_caj = linea_caj.split(",")    
+    i = 0                              
+                                           
+    while linea_caj != "":
+        
+        v_caj[i] = rcajero()
+        v_caj[i].num = lista_caj[0]
+        v_caj[i].ubi = str(lista_caj[1])
+        v_caj[i].mov = lista_caj[2]
+        i+=1
+        linea_caj = a2.readline().strip()
+        lista_caj = linea_caj.split(",")  
+    
+    a2.close()
+        
+                        
     #creo el vector de cuentas sobredimensionado:
-    vector_cuentas = [cuenta]* 1000
+    vector_cuentas = np.array([cuenta]* 1000)
     vector_cuentas[0] = cuenta()
 
     #CARGO LOS DATOS AL VECTOR: 
@@ -39,18 +66,16 @@ def cargadatos():
         linea = archivocuentas.readline().strip().split(",")
         indice += 1
     
-    
-    
     #El indice me dara la cantidad de cuentas que tengo cargadas en el vector:
     cuentashabiles = indice
 
     #Cierro el archivo:
     archivocuentas.close()
     
-
     #RETORNO LAS CUENTAS, Y LA CANTIDAD DE CUENTAS HABILES:
 
-    return vector_cuentas, cuentashabiles
+    return vector_cuentas, cuentashabiles, v_caj
+
 
 
 
@@ -79,6 +104,45 @@ def consultacuenta(vector_cuentas, cuentashabiles):
 
     return 
 
+# COMIENZA EL EJERCICIO # 2:
+
+
+def ejercicio_A_y_C(vec_cuenta):
+    
+    a1 = open("operaciones.txt","r")
+    
+    linea_ope = a1.readline().strip()
+    lista_ope = linea_ope.split(",")
+    i = 0
+    v_num_cajeros = np.array([0]*120)
+    
+    while linea_ope != "":
+        camp_ante = lista_ope[0]
+        saldo_total = 0.0
+        v_num_cajeros[int(lista_ope[4])]+=1
+        
+        while camp_ante == lista_ope[0] and linea_ope != "":
+            
+            if lista_ope[5] == "1":
+                saldo_total+= float(lista_ope[6])
+            else:
+                saldo_total = saldo_total - float(lista_ope[6])
+                
+            
+            
+            linea_ope = a1.readline().strip()
+            lista_ope = linea_ope.split(",")
+        
+        saldo_actualizado = vec_cuenta[i].saldo + saldo_total
+        vec_cuenta[i].saldo = saldo_actualizado
+        
+        i+=1
+        
+        print("El total de los movimientos anuales de la cuenta:", camp_ante, "es de $", saldo_total, "pesos")
+    
+    a1.close()
+    
+    return vec_cuenta
 
 def altacuentas(vector_cuentas, cuentashabiles):
 
