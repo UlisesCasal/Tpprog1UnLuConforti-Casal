@@ -31,9 +31,9 @@ def cargadatos():
     while linea_caj != "":
         
         v_caj[i] = rcajero()
-        v_caj[i].num = lista_caj[0]
-        v_caj[i].ubi = str(lista_caj[1])
-        v_caj[i].mov = lista_caj[2]
+        v_caj[i].num = int(lista_caj[0])
+        v_caj[i].ubi = lista_caj[1]
+        v_caj[i].mov = int(lista_caj[2])
         i+=1
         linea_caj = a2.readline().strip()
         lista_caj = linea_caj.split(",")  
@@ -107,14 +107,15 @@ def consultacuenta(vector_cuentas, cuentashabiles):
 # COMIENZA EL EJERCICIO # 2:
 
 
-def ejercicio_A_y_C(vec_cuenta):
+def ejercicios_A_B_C_y_D(vec_cuenta,vec_cajero):
     
     a1 = open("operaciones.txt","r")
     
     linea_ope = a1.readline().strip()
     lista_ope = linea_ope.split(",")
     i = 0
-    v_num_cajeros = np.array([0]*120)
+    v_num_cajeros = np.array([0]*121)
+    mayor = 0
     
     while linea_ope != "":
         camp_ante = lista_ope[0]
@@ -127,8 +128,6 @@ def ejercicio_A_y_C(vec_cuenta):
                 saldo_total+= float(lista_ope[6])
             else:
                 saldo_total = saldo_total - float(lista_ope[6])
-                
-            
             
             linea_ope = a1.readline().strip()
             lista_ope = linea_ope.split(",")
@@ -139,10 +138,33 @@ def ejercicio_A_y_C(vec_cuenta):
         i+=1
         
         print("El total de los movimientos anuales de la cuenta:", camp_ante, "es de $", saldo_total, "pesos")
-    
+        
     a1.close()
     
-    return vec_cuenta
+    for i in range(len(v_num_cajeros)):
+        
+        if v_num_cajeros[i] > mayor:
+            mayor = v_num_cajeros[i]
+            posicion = i
+    
+    cajero_mayor = posicion 
+    
+    print("El cajero con mayor cantidad de movimientos en el año es el:", cajero_mayor)
+    
+    
+    for i in range(len(v_num_cajeros)-1):
+    
+            vec_cajero[i].mov+= v_num_cajeros[i+1]
+    
+    
+    
+    return vec_cuenta, vec_cajero
+
+
+listaa = cargadatos()
+
+ejercicios_A_B_C_y_D(listaa[0],listaa[2])
+
 
 def altacuentas(vector_cuentas, cuentashabiles):
 
