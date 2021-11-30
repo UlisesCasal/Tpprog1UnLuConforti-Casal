@@ -161,10 +161,6 @@ def ejercicios_A_B_C_y_D(vec_cuenta,vec_cajero):
     return vec_cuenta, vec_cajero
 
 
-listaa = cargadatos()
-
-ejercicios_A_B_C_y_D(listaa[0],listaa[2])
-
 
 def altacuentas(vector_cuentas, cuentashabiles):
 
