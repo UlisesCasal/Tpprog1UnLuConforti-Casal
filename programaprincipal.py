@@ -107,20 +107,24 @@ def consultacuenta(vector_cuentas, cuentashabiles):
 # COMIENZA EL EJERCICIO # 2:
 
 
-def ejercicios_A_B_C_y_D(vec_cuenta,vec_cajero):
+def ejercicios_A_y_C(vec_cuenta):
     
     a1 = open("operaciones.txt","r")
     
     linea_ope = a1.readline().strip()
     lista_ope = linea_ope.split(",")
+    
     i = 0
     v_num_cajeros = np.array([0]*121)
-    mayor = 0
+
     
     while linea_ope != "":
         camp_ante = lista_ope[0]
-        saldo_total = 0.0
-        v_num_cajeros[int(lista_ope[4])]+=1
+        
+        saldo_total = 0.0 
+        
+        v_num_cajeros[int(lista_ope[4])]+=1 
+        
         
         while camp_ante == lista_ope[0] and linea_ope != "":
             
@@ -132,7 +136,7 @@ def ejercicios_A_B_C_y_D(vec_cuenta,vec_cajero):
             linea_ope = a1.readline().strip()
             lista_ope = linea_ope.split(",")
         
-        saldo_actualizado = vec_cuenta[i].saldo + saldo_total
+        saldo_actualizado = vec_cuenta[i].saldo + saldo_total 
         vec_cuenta[i].saldo = saldo_actualizado
         
         i+=1
@@ -140,6 +144,16 @@ def ejercicios_A_B_C_y_D(vec_cuenta,vec_cajero):
         print("El total de los movimientos anuales de la cuenta:", camp_ante, "es de $", saldo_total, "pesos")
         
     a1.close()
+    
+    
+    
+    return vec_cuenta, v_num_cajeros
+    
+
+    
+def ejercicio_B(v_num_cajeros):
+    
+    mayor = 0
     
     for i in range(len(v_num_cajeros)):
         
@@ -149,17 +163,23 @@ def ejercicios_A_B_C_y_D(vec_cuenta,vec_cajero):
     
     cajero_mayor = posicion 
     
+    
     print("El cajero con mayor cantidad de movimientos en el año es el:", cajero_mayor)
     
     
+
+def ejercicio_D(v_cajeros,v_num_cajeros):
+    
     for i in range(len(v_num_cajeros)-1):
     
-            vec_cajero[i].mov+= v_num_cajeros[i+1]
+            v_cajeros[i].mov+= v_num_cajeros[i+1]
     
+ 
     
-    
-    return vec_cuenta, vec_cajero
+    return v_cajeros
 
+
+# Comienza el ejercicio #3
 
 
 def altacuentas(vector_cuentas, cuentashabiles):
