@@ -3,6 +3,7 @@ from pyrecord import Record
 from random import *
 import numpy as np
 import os
+from
 
 # COMIENZA EL EJERCICIO #1
 
@@ -107,7 +108,7 @@ def consultacuenta(vector_cuentas, cuentashabiles):
 # COMIENZA EL EJERCICIO # 2:
 
 
-def ejercicios_A_y_C(vec_cuenta):
+def ejercicios_A_y_C(vec_cuenta, cuentashabiles, v_caj):
     
     a1 = open("operaciones.txt","r")
     
@@ -147,7 +148,7 @@ def ejercicios_A_y_C(vec_cuenta):
     
     
     
-    return vec_cuenta, v_num_cajeros
+    return vec_cuenta, cuentashabiles, v_caj, v_num_cajeros
     
 
     
@@ -164,7 +165,7 @@ def ejercicio_B(v_num_cajeros):
     cajero_mayor = posicion 
     
     
-    print("El cajero con mayor cantidad de movimientos en el año es el:", cajero_mayor)
+    print("        El cajero con mayor cantidad de movimientos en el año es el:", cajero_mayor)
     
     
 
@@ -260,19 +261,21 @@ def modificacioncuentas(vector_cuentas, cuentashabiles):
 
 
 def ABMcuentas(vector_cuentas, cuentashabiles):
-
-    #ESTA FUNCION REALIZA ALTAS, BAJAS Y MODIFICACIONES DE LAS CUENTAS. 
-
-    #MENU PARA ELEJIR QUE DESEA HACER EL USUARIO:
-    print(" "*10, "1- Si desea dar de alta una nueva cuenta.")
-    print(" "*10, "2- Si desea dar de baja una cuenta.")
-    print(" "*10, "3- Si desea realizar una modificacion en su cuenta.")
-    print(" "*10, "4- Si desea salir al menu principal.")
-    decision = int(input("Ingrese una opción: "))
-    os.system("cls")
+    
+    salir = "N"
 
     #Inicio de ciclo del menu:
-    while decision != 4:
+    while salir == "N":
+        
+        #ESTA FUNCION REALIZA ALTAS, BAJAS Y MODIFICACIONES DE LAS CUENTAS. 
+
+        #MENU PARA ELEJIR QUE DESEA HACER EL USUARIO:
+        print(" "*10, "1- Si desea dar de alta una nueva cuenta.")
+        print(" "*10, "2- Si desea dar de baja una cuenta.")
+        print(" "*10, "3- Si desea realizar una modificacion en su cuenta.")
+        print(" "*10, "4- Si desea salir al menu principal.")
+        decision = int(input("Ingrese una opción: "))
+        os.system("cls")
 
         if decision == 1:
 
@@ -293,17 +296,145 @@ def ABMcuentas(vector_cuentas, cuentashabiles):
             #CAMBIO ALGUN DATO DE LA CUENTA: 
             vector_cuentas = modificacioncuentas(vector_cuentas, cuentashabiles)
         
+        elif decision == 4:
+            salir = "S"
+        
         #VUELVO A MOSTRAR PARA SABER SI QUIERE SALIR O REALIZAR OTRA OPERACION: 
-        input("Presione enter para continuar...")
-        os.system("cls")
-        print(" "*10, "1- Si desea dar de alta una nueva cuenta.")
-        print(" "*10, "2- Si desea dar de baja una cuenta.")
-        print(" "*10, "3- Si desea realizar una modificacion en su cuenta.")
-        print(" "*10, "4- Si desea salir al menu principal.")
-        decision = int(input("Ingrese una opción: "))
     
     return vector_cuentas, cuentashabiles
 
+# Funciones de menu
+
+def mensaje(m):
+    print()
+    print(" "*8,m+'...')
+
+def elegir(ultimo):
+    print()
+    print(" "*22,end=" ")
+    opc=int(input(" Elija una opción: "))
+    while((opc>ultimo) or (opc<0)):
+        print(" "*20,"Lo siento, la Opción es inválida")
+        print(" "*22,end=" ")
+        opc=int(input(" Elija una opción: "))
+    return opc
+
+def pausa():
+    print()
+    print(" "*20,end=" ") # Fijate como ponemos "*20" para multiplicar los espacios vacios.
+    input(" Presione Enter para continuar...")
+
+def limpiar_pantalla():
+    if (os.name)=='posix':
+        os.system('clear')
+    if (os.name)=='nt':
+        os.system('cls')
+    return None
 
 
-hola = 1
+def menu():
+                               
+    lista = cargadatos()
+    bandera = 1
+    salir = "N"
+    
+    while salir == "N":
+    
+    
+        if bandera == 1:
+            
+            print("                            MENU PRINCIPAL")
+            print()
+            print("      1_CONSULTAR SALDO DE CUENTA")
+            print("      2_ACTUALIZAR SALDO DE CUENTAS Y MOSTRAR TOTAL DE MOVIMIENTOS ANUALES")
+            print("      3_AMB DE CUENTAS")
+            print("      4_SALIR")
+            print()
+            
+            opcion = elegir(4)
+            
+            if opcion == 1:
+                
+                consultacuenta(lista[0],lista[1])
+                
+                pausa()
+            
+            if opcion == 2:
+                
+                lista = ejercicios_A_y_C(lista[0],lista[1],lista[2])
+                bandera = 2
+            
+            if opcion == 3:
+                
+                print("AMB DE CUENTAS")
+                abm = ABMcuentas(lista[0],lista[1])
+                aux = lista[2]
+                lista = [abm[0],abm[1],aux]
+            
+            if opcion == 4:
+                salir = "S"
+                limpiar_pantalla()
+        
+        if bandera == 2:
+            
+            pausa()
+            
+            limpiar_pantalla()
+            
+            print("                          MENU PRINCIPAL")
+            print()
+            print("      1_CONSULTAR SALDO DE CUENTA")
+            print("      2_AMB DE CUENTAS")
+            print("      3_CONSULTAR CAJERO CON MAYOR CANTIDAD DE MOVIMIENTOS EN EL AÑO")
+            print("      4_ACTUALIZAR CANTIDAD HISTORICA DE MOVIMIENTOS DE LOS CAJEROS")
+            print("      5_SALIR")
+            print()
+            
+            opcion = elegir(5)
+            
+            if opcion == 1:
+                
+                consultacuenta(lista[0],lista[1])
+                
+                pausa()
+            
+            if opcion == 2:
+                
+                print("AMB DE CUENTAS")
+                abm = ABMcuentas(lista[0],lista[1])
+                aux1 = lista[2]
+                aux2 = lista[3]
+                lista = [abm[0],abm[1],aux1,aux2]
+                
+        
+            if opcion == 3:
+                
+                ejercicio_B(lista[3])
+                
+            if opcion == 4:
+                
+                cajeros = ejercicio_D(lista[2],lista[3])
+                aux1 = lista[0]
+                aux2 = lista[1]
+                aux3 = lista[3]
+                lista = [aux1,aux2,cajeros,aux3]
+                
+                mensaje("CANTIDAD HISTORICA DE MOVIMIENTOS DE CAJEROS ACTUALIZADA")
+            
+            if opcion == 5:
+                
+                salir = "S"
+                limpiar_pantalla()
+            
+
+            
+            
+            
+            
+                
+            
+        
+    
+    
+    
+    
