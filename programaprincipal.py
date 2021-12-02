@@ -3,7 +3,7 @@ from pyrecord import Record
 from random import *
 import numpy as np
 import os
-from
+from funciones_metodos_utiles_registros_archivos import *
 
 # COMIENZA EL EJERCICIO #1
 
@@ -426,9 +426,7 @@ def menu():
                 salir = "S"
                 limpiar_pantalla()
             
-
-            
-            
+menu()         
             
             
                 
