@@ -45,7 +45,7 @@ def elegir(ultimo):
 
 # Con esta sentencia podemos obtener un numero fraccionario aleatorio.
 
-variable =random.randint(10) + random.random() 
+variable =random.randint(0,10) + random.random() 
 
 # randint vendria a ser un metodo similar a rangrange (de hecho, aun no encuentro la diferencia) y devuelve un numero entero
 # aleatorio seleccionado de un rango. random vendria a ser un metodo para generar un numero fracionario aleatorio entre 0 y 1.
@@ -58,7 +58,7 @@ variable =random.randint(10) + random.random()
 # que queramos imprimir un numero con parte fraccionaria, podemos indicar con ".numf" la cantidad de digitos fraccionarios q deseamos 
 # imprimir.
 
-print(f'{"holaa":<12} {"papuu":>4}     {variable:<12} {"papaaa":>12.2f}')
+print(f'{"hola":<12} {"papa":>4}     {variable:<12} {"papaaa",:>12.2f}')
 
 
 
