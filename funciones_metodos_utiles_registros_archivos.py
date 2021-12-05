@@ -58,7 +58,7 @@ variable =random.randint(0,10) + random.random()
 # que queramos imprimir un numero con parte fraccionaria, podemos indicar con ".numf" la cantidad de digitos fraccionarios q deseamos 
 # imprimir.
 
-print(f'{"hola":<12} {"papa":>4}     {variable:<12} {"papaaa",:>12.2f}')
+# print(f'{"hola":<12} {"papa":>4}     {variable:<12} {"papaaa":>12.2f}')
 
 
 
